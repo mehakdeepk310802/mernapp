@@ -4,7 +4,7 @@ import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
+import { mail } from '../util/mail.js';
 const jwtSecret = "MynameisEndToEndYouTubeChannel$#"
 const router = express.Router();
 router.post("/createuser", [
@@ -153,24 +153,9 @@ router.post("/forgotpassword", [body('email').isEmail()], async (req, res) => {
         await user.save();
 
         // Send email with reset link
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'mehakdeepk419@gmail.com',  // Change this to your email
-                pass: 'cyhoptuscjihhnhh'  // Use Google App Password
-            }
-        });
-
         const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
-        const mailOptions = {
-            from: 'mehakdeepk419@gmail.com',
-            to: user.email,
-            subject: "Password Reset Request",
-            html: `<p>You requested a password reset. Click <a href="${resetUrl}">here</a> to reset your password. This link expires in 1 hour.</p>`
-        };
-
-        await transporter.sendMail(mailOptions);
-        res.json({ success: true, message: "Password reset link sent to email" });
+        mail(resetUrl, user.email);
+        return res.json({ success: true, message: "Password reset link sent to email" });
     } 
     catch (err) {
         console.error('Error in forgot password:', err);
