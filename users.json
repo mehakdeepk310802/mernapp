@@ -1,0 +1,65 @@
+[{
+  "_id": {
+    "$oid": "669c871533e01a6ea115f6b3"
+  },
+  "name": "Mehakdeep Kaur",
+  "location": "Qwerty erdfef",
+  "email": "mehakdeepk419@gmail.com",
+  "password": "123456",
+  "date": {
+    "$date": "2024-07-21T03:57:09.264Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669cf1a7792fc306499a3a71"
+  },
+  "name": "Andrews Selva",
+  "location": "London",
+  "email": "adre@hotmail.com",
+  "password": "123456",
+  "date": {
+    "$date": "2024-07-21T11:31:51.005Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669d3f3ea80794528353ab42"
+  },
+  "name": "Zeaus",
+  "location": "ijqopjo",
+  "email": "zeaus123@gmail.com",
+  "password": "123456",
+  "date": {
+    "$date": "2024-07-21T17:02:54.716Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669e06a52979bc37f05801a7"
+  },
+  "name": "Itachi Uchiha",
+  "location": "13-A Park Avenue,  London, UK",
+  "email": "Uchiha@gmail.com",
+  "password": "123456",
+  "date": {
+    "$date": "2024-07-22T07:13:41.732Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669fafc03cae365ef0c731ae"
+  },
+  "name": "Boruto Uzumaki",
+  "location": "Qwerty Village",
+  "email": "Naruto@hotmail.com",
+  "password": "$2b$10$D6jA12cNsYjp5HvCJ9BeV.SQv2kW3BV9gyQmoR73W9iZHVcCefdg2",
+  "date": {
+    "$date": "2024-07-23T13:27:28.448Z"
+  },
+  "__v": 0
+}]
