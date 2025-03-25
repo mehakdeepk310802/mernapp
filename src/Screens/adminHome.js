@@ -7,10 +7,21 @@ const AdminHome = () => {
     const [salesRevenue, setSalesRevenue] = useState(0);
 
     useEffect(() => {
-        // Fetch data from your API and update the state
-        setTotalOrders(120);
-        setRegisteredUsers(2388);
-        setSalesRevenue(492000); // Example in rupees
+        fetch('http://localhost:5000/api/admin/home/getAllTotals', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            setTotalOrders(data.totalOrders);
+            setRegisteredUsers(data.totalUsers);
+        setSalesRevenue(12344);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }, []);
 
     return (
