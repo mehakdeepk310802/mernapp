@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Login from '../Screens/adminLogin.js';
 import AdminHome from '../Screens/adminHome.js';
 import AdminInfo from '../Screens/AdminInfo.js';
+import CustomerManagement from '../Screens/CustomerManage.js';
 import SignUp from '../Screens/SignUpAdmin.js';
 import Navbar from './navbarAdminPage.js';
 import ForgotPassword from '../Screens/ForgotPasswordAdmin.js';  // Ensure correct import
@@ -19,6 +20,7 @@ function Layout() {
         <Routes>
           <Route path="/" element={<AdminHome />} />
           <Route path="/" element={<AdminInfo />} />
+          <Route path="/" element={<CustomerManagement />} />
           <Route path="/loginadmin" element={<Login />} />
           <Route path="/createadmin" element={<SignUp />} />
           <Route path="/forgotpasswordadmin" element={<ForgotPassword />} />
