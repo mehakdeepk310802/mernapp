@@ -9,7 +9,6 @@ const AdminSchema = new Schema({
     },
     location: {
         type: String,
-        required: true
     },
     email: {
         type: String,

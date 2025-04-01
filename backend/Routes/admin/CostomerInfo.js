@@ -18,39 +18,24 @@ router.put('/updateUser/:id', async (req, res) => {
             return res.status(400).json({ message: 'User ID is required' });
         }
 
-        const { name, email } = req.body;
+        const { name, email, location } = req.body;
         const updates = {};
         
         if (name) updates.name = name;
-        
         if (email) {
-            // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 return res.status(400).json({ message: 'Invalid email format' });
             }
-            
-            // Check if email already exists for another user
-            const existingUser = await User.findOne({ 
-                email, 
-                _id: { $ne: req.params.id } 
-            });
-            
-            if (existingUser) {
-                return res.status(409).json({ 
-                    success: false,
-                    message: 'Email already in use by another user' 
-                });
-            }
-            
             updates.email = email;
         }
+        if (location) updates.location = location;
 
         const user = await User.findByIdAndUpdate(
             req.params.id,
             { $set: updates },
             { new: true, runValidators: true }
-        ); 
+        );
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -64,22 +49,38 @@ router.put('/updateUser/:id', async (req, res) => {
 
     } catch (error) {
         console.error('Update user error:', error);
-        
-        // Handle specific MongoDB errors
-        if (error.code === 11000) {
-            return res.status(409).json({
-                success: false,
-                message: 'Email already exists',
-                error: 'Duplicate email address'
-            });
-        }
-        
-        res.status(500).json({
-            success: false,
+        res.status(500).json({ 
+            success: false, 
             message: 'Error updating user',
-            error: error.message
+            error: error.message 
         });
     }
 });
 
+router.delete('/deleteUser/:id', async (req, res) => {
+    try {
+        if (!req.params.id) {
+            return res.status(400).json({ message: 'User ID is required' });
+        }
+
+        const user = await User.findByIdAndDelete(req.params.id);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json({
+            success: true,
+            message: 'User deleted successfully'
+        });
+
+    } catch (error) {
+        console.error('Delete user error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error deleting user',
+            error: error.message
+        });
+    }
+});
 export default router;

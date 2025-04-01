@@ -19,8 +19,9 @@ function Layout() {
       <div style={{ marginTop: "5rem" }}>
         <Routes>
           <Route path="/" element={<AdminHome />} />
-          <Route path="/" element={<AdminInfo />} />
-          <Route path="/" element={<CustomerManagement />} />
+          <Route path="/adminInfo" element={<AdminInfo />} />
+          <Route path="/customers" element={<CustomerManagement />} />
+          <Route path="/order" element={<CustomerManagement />} />
           <Route path="/loginadmin" element={<Login />} />
           <Route path="/createadmin" element={<SignUp />} />
           <Route path="/forgotpasswordadmin" element={<ForgotPassword />} />

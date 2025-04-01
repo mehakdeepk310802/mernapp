@@ -4,7 +4,6 @@ import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import nodemailer from 'nodemailer';
 import { mailSender } from '../../util/mail.js';
 const jwtSecret = "MynameisEndToEndYouTubeChannel$#"
 const router = express.Router();
@@ -240,10 +239,66 @@ router.post("/resetpasswordadmin/:token", [
 router.get('/allAdmins', async (req, res) => {
     try {
         const admins = (await Admin.find({})) || [];
+        console.log(admins);
         res.json({"admins": admins});
     } catch (error) {
         res.status(500).json({ message: error.message });
         console.log(error);
     }
 });
+
+router.put('/updateAdmin/:id', [
+    body('email').optional().isEmail(),
+    body('name').optional().isLength({ min: 3 }),
+], async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body;
+        
+        const admin = await Admin.findByIdAndUpdate(
+            id,
+            { $set: updates },
+            { new: true, runValidators: true }
+        );
+
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+
+        res.json({ 
+            success: true, 
+            admin: {
+                name: admin.name,
+                email: admin.email,
+                location: admin.location
+            }
+        });
+    } catch (error) {
+        console.error('Update admin error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error updating admin' 
+        });
+    }
+});
+
+router.delete('/deleteAdmin/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const admin = await Admin.findByIdAndDelete(id);
+
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+
+        res.json({ success: true, message: 'Admin deleted successfully' });
+    } catch (error) {
+        console.error('Delete admin error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error deleting admin' 
+        });
+    }
+});
+
 export default router;
