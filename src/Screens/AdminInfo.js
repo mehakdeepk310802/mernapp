@@ -5,12 +5,11 @@ const AdminInfo = () => {
   const [adminInfo, setAdminInfo] = useState(null);
 
   useEffect(() => {
-    // Fetch admin info from the backend
     const fetchAdminInfo = async () => {
       try {
-        const response = await fetch('/api/admin/info'); // Adjust the URL as needed
+        const response = await fetch('/api/admin/allAdmins'); // Adjust the URL as needed
         const data = await response.json();
-        setAdminInfo(data);
+        setAdminInfo(data.admin);
       } catch (error) {
         console.error('Error fetching admin info:', error);
       }

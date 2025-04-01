@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
+import { mailSender } from '../../util/mail.js';
 const jwtSecret = "MynameisEndToEndYouTubeChannel$#"
 const router = express.Router();
 router.post("/createadmin", [
@@ -152,24 +153,7 @@ router.post("/forgotpasswordadmin", [body('email').isEmail()], async (req, res) 
         user.resetTokenExpiry = Date.now() + 3600000; // Token expires in 1 hour
         await user.save();
 
-        // Send email with reset link
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'mehakdeepk419@gmail.com',  // Change this to your email
-                pass: 'cyhoptuscjihhnhh'  // Use Google App Password
-            }
-        });
-
-        const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
-        const mailOptions = {
-            from: 'mehakdeepk419@gmail.com',
-            to: user.email,
-            subject: "Password Reset Request",
-            html: `<p>You requested a password reset. Click <a href="${resetUrl}">here</a> to reset your password. This link expires in 1 hour.</p>`
-        };
-
-        await transporter.sendMail(mailOptions);
+        mailSender(`http://localhost:5000/resetpasswordadmin/${resetToken}`, req.body.email);
         res.json({ success: true, message: "Password reset link sent to email" });
     } 
     catch (err) {
@@ -250,6 +234,16 @@ router.post("/resetpasswordadmin/:token", [
             success: false, 
             message: "Server error" 
         });
+    }
+});
+
+router.get('/allAdmins', async (req, res) => {
+    try {
+        const admins = (await Admin.find({})) || [];
+        res.json({"admins": admins});
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+        console.log(error);
     }
 });
 export default router;
