@@ -4,7 +4,7 @@ import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import { mail } from '../util/mail.js';
+import { mailSender } from '../util/mail.js';
 const jwtSecret = "MynameisEndToEndYouTubeChannel$#"
 const router = express.Router();
 router.post("/createuser", [
@@ -154,7 +154,7 @@ router.post("/forgotpassword", [body('email').isEmail()], async (req, res) => {
 
         // Send email with reset link
         const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
-        mail(resetUrl, user.email);
+        mailSender(resetUrl, user.email);
         return res.json({ success: true, message: "Password reset link sent to email" });
     } 
     catch (err) {

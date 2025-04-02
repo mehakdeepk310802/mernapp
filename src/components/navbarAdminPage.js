@@ -21,13 +21,13 @@ const Navbar = () => {
                 <Link className="nav-link active fs-5" aria-current="page" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active fs-5" aria-current="page" to="/">Admin Info</Link>
+                <Link className="nav-link active fs-5" aria-current="page" to="/adminInfo">Admin Info</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active fs-5" aria-current="page" to="/">Customers</Link>
+                <Link className="nav-link active fs-5" aria-current="page" to="/customers">Customers</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active fs-5" aria-current="page" to="/">Orders</Link>
+                <Link className="nav-link active fs-5" aria-current="page" to="/order">Orders</Link>
               </li>
             </ul>
             {(!localStorage.getItem("authToken")) ? (
