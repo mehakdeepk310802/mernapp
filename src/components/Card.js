@@ -16,7 +16,7 @@ export default function Card(props) {
         if (!size || !priceOptions.includes(size)) {
             setSize(priceOptions[0]); // Update size only if invalid
         }
-    }, [priceOptions]);
+    }, [priceOptions, size]);
 
     const finalPrice = qty * (parseInt(options[size]) || 0); // Ensure price updates dynamically
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Table, Container, Spinner, Alert, Modal, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 const CustomerManagement = () => {
   const [customers, setCustomers] = useState([]);
@@ -13,7 +13,7 @@ const CustomerManagement = () => {
     email: '',
     location: ''
   });
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   useEffect(() => {
     fetchCustomers();
@@ -91,7 +91,7 @@ const CustomerManagement = () => {
         throw new Error('Failed to update customer');
       }
 
-      const data = await response.json();
+      //const data = await response.json();
 
       setCustomers(prevCustomers => 
         prevCustomers.map(customer => 

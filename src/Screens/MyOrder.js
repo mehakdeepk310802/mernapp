@@ -59,7 +59,7 @@ export default function MyOrder() {
                                                         <hr />
                                                     </div> :
 
-                                                        <div className='col-12 col-md-6 col-lg-3' >
+                                                        <div className='col-12 col-md-6 col-lg-3' margin="auto" key={arrayData.id}>
                                                             <div className="card mt-3" style={{ width: "16rem", maxHeight: "360px" }}>
                                                                 <img src={arrayData.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
                                                                 <div className="card-body">
