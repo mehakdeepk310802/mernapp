@@ -1,101 +1,96 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/navbar';
 
 export default function MyOrder() {
-
-    const [orderData, setorderData] = useState({})
+    const [orderData, setOrderData] = useState({});
 
     const fetchMyOrder = async () => {
-        console.log(localStorage.getItem('userEmail'))
-        await fetch("http://localhost:5000/api/myOrderData", {
-            // credentials: 'include',
-            // Origin:"http://localhost:3000/login",
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({
-                email:localStorage.getItem('userEmail')
-            })
-        }).then(async (res) => {
-            let response = await res.json()
-            await setorderData(response)
-        })
+        const email = localStorage.getItem('userEmail');
+        try {
+            const res = await fetch("http://localhost:5000/api/myOrderData", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email })
+            });
 
-
-
-        // await res.map((data)=>{
-        //    console.log(data)
-        // })
-
-
-    }
+            const data = await res.json();
+            setOrderData(data);
+        } catch (err) {
+            console.error("Error fetching order data:", err);
+        }
+    };
 
     useEffect(() => {
-        fetchMyOrder()
-    }, [])
+        fetchMyOrder();
+    }, []);
 
     return (
         <div>
+            {/* Fixed Navbar */}
             <div>
                 <Navbar />
             </div>
 
-            <div className='container'>
-                <div className='row'>
-
-                    {orderData.length !== 0 ? Array(orderData).map(data => {
-                        return (
-                            data.orderData ?
-                                data.orderData.order_data.slice(0).reverse().map((item) => {
-                                    return (
-                                        item.map((arrayData) => {
-                                            return (
-                                                <div  >
-                                                    {arrayData.Order_date ? <div className='m-auto mt-5'>
-
-                                                        {data = arrayData.Order_date}
-                                                        <hr />
-                                                    </div> :
-
-                                                        <div className='col-12 col-md-6 col-lg-3' margin="auto" key={arrayData.id}>
-                                                            <div className="card mt-3" style={{ width: "16rem", maxHeight: "360px" }}>
-                                                                <img src={arrayData.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
-                                                                <div className="card-body">
-                                                                    <h5 className="card-title">{arrayData.name}</h5>
-                                                                    <div className='container w-100 p-0' style={{ height: "38px" }}>
-                                                                        <span className='m-1'>{arrayData.qty}</span>
-                                                                        <span className='m-1'>{arrayData.size}</span>
-                                                                        <span className='m-1'>{data}</span>
-                                                                        <div className=' d-inline ms-2 h-100 w-20 fs-5' >
-                                                                            ₹{arrayData.price}/-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+            {/* Add top padding to avoid overlapping with navbar */}
+            <div className='container pt-5 mt-5'>
+                {orderData.orderData?.order_data?.length ? (
+                    orderData.orderData.order_data
+                        .slice(0)
+                        .reverse()
+                        .map((order, orderIndex) => (
+                            <div key={orderIndex}>
+                                <div className='m-auto mt-5 fs-5 fw-bold'>
+                                    {order[0]?.Order_date || order[1]?.Order_date || 'Order Date'}
+                                    <hr />
+                                </div>
+                                <div className='row'>
+                                    {order.map((item, index) => {
+                                        if (item.Order_date) return null;
+                                        return (
+                                            <div
+                                                className='col-12 col-md-6 col-lg-3 mb-3'
+                                                key={index}
+                                            >
+                                                <div
+                                                    className='card'
+                                                    style={{ width: '16rem', maxHeight: '360px' }}
+                                                >
+                                                    <img
+                                                        src={item.img}
+                                                        className='card-img-top'
+                                                        alt={item.name}
+                                                        style={{ height: '120px', objectFit: 'fill' }}
+                                                    />
+                                                    <div className='card-body'>
+                                                        <h5 className='card-title'>{item.name}</h5>
+                                                        <div className='container w-100 p-0'>
+                                                            <span className='m-1'>{item.qty}</span>
+                                                            <span className='m-1'>{item.size}</span>
+                                                            <div className='d-inline ms-2 h-100 w-20 fs-6'>
+                                                                ₹{item.price}/-
                                                             </div>
-
                                                         </div>
-
-
-
-                                                    }
-
+                                                    </div>
                                                 </div>
-                                            )
-                                        })
-
-                                    )
-                                }) : ""
-                        )
-                    }) : ""}
-                </div>
-
-
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        ))
+                ) : (
+                    <div className='text-center mt-5'>No orders found.</div>
+                )}
             </div>
 
-            <Footer />
+            {/* Footer */}
+            <div>
+                <Footer />
+            </div>
         </div>
-    )
+    );
 }
-// {"orderData":{"_id":"63024fd2be92d0469bd9e31a","email":"mohanDas@gmail.com","order_data":[[[{"id":"62ff20fbaed6a15f800125e9","name":"Chicken Fried Rice","qty":"4","size":"half","price":520},{"id":"62ff20fbaed6a15f800125ea","name":"Veg Fried Rice","qty":"4","size":"half","price":440}],"2022-08-21T15:31:30.239Z"],[[{"id":"62ff20fbaed6a15f800125f4","name":"Mix Veg Pizza","qty":"4","size":"medium","price":800},{"id":"62ff20fbaed6a15f800125f3","name":"Chicken Doub;e Cheeze Pizza","qty":"4","size":"regular","price":480}],"2022-08-21T15:32:38.861Z"]],"__v":0}}
+    

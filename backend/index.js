@@ -7,6 +7,7 @@ import cors from 'cors';
 import adminRoute from './Routes/admin/CreateAdmin.js';
 import homeRoutes from './Routes/admin/HomeAPi.js';
 import costumerInfo from './Routes/admin/CostomerInfo.js';
+import AdminOrder from './Routes/admin/ordersInfo.js';
 const app = express();
 const port = 5000;
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/api/admin",adminRoute);
 app.use('/api/admin/home', homeRoutes);
 app.use('/api/admin/costumerInfo',costumerInfo)
+app.use('/api/admin/ordersInfo', AdminOrder);
 // Normal Apis
 app.use('/api', userRoutes);
 app.use('/api', displayData);

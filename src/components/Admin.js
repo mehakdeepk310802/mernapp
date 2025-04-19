@@ -8,6 +8,7 @@ import SignUp from '../Screens/SignUpAdmin.js';
 import Navbar from './navbarAdminPage.js';
 import ForgotPassword from '../Screens/ForgotPasswordAdmin.js';  // Ensure correct import
 import ResetPassword from '../Screens/ResetPasswordAdmin.js';
+import OrderAdmin from '../Screens/OrderAdmin.js'; // Ensure correct import
 
 function Layout() {
   const location = useLocation();
@@ -21,7 +22,7 @@ function Layout() {
           <Route path="/" element={<AdminHome />} />
           <Route path="/adminInfo" element={<AdminInfo />} />
           <Route path="/customers" element={<CustomerManagement />} />
-          <Route path="/order" element={<CustomerManagement />} />
+          <Route path="/order" element={<OrderAdmin />} />
           <Route path="/loginadmin" element={<Login />} />
           <Route path="/createadmin" element={<SignUp />} />
           <Route path="/forgotpasswordadmin" element={<ForgotPassword />} />
