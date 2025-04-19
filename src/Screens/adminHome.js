@@ -28,7 +28,7 @@ const AdminHome = () => {
       .then((data) => {
         setTotalOrders(data.totalOrders);
         setRegisteredUsers(data.totalUsers);
-        setSalesRevenue(12344); // static for now
+        setSalesRevenue(data.totalEarnings); // static for now
       })
       .catch((error) => {
         console.error('Error:', error);
