@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export default function ForgotPassword() {
-  console.log("ForgotPassword component is rendering!"); // Debugging line
+  console.log("ForgotPassword component is rendering!");
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -15,7 +15,7 @@ export default function ForgotPassword() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/forgotpasswordadmin', {
+      const response = await fetch('http://localhost:5000/api/admin/forgotpasswordadmin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -27,6 +27,7 @@ export default function ForgotPassword() {
       setMessage('Password reset link sent! Check your email.');
     } catch (error) {
       setError(error.message);
+      console.error("Error during password reset:", error); // Debugging line
     } finally {
       setLoading(false);
     }
