@@ -8,6 +8,9 @@ import adminRoute from './Routes/admin/CreateAdmin.js';
 import homeRoutes from './Routes/admin/HomeAPi.js';
 import costumerInfo from './Routes/admin/CostomerInfo.js';
 import AdminOrder from './Routes/admin/ordersInfo.js';
+import  mailer from './Routes/admin/mail.js';
+
+
 const app = express();
 const port = 5000;
 
@@ -27,6 +30,7 @@ app.use('/api/admin/ordersInfo', AdminOrder);
 app.use('/api', userRoutes);
 app.use('/api', displayData);
 app.use('/api', orderData);
+app.use('/api/admin', mailer);
 app.get('/', (req, res) => {
     res.send('Hello World');
 });

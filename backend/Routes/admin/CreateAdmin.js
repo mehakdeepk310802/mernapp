@@ -135,6 +135,7 @@ router.post("/forgotpasswordadmin", [body('email').isEmail()], async (req, res) 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ success: false, message: 'Enter a valid email' });
+        console.log('Validation errors:', errors.array());
     }
 
     try {
