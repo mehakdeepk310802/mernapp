@@ -17,7 +17,7 @@ export default function ResetPassword() {
             return;
         }
         try {
-            const response = await fetch(`http://localhost:5000/api/resetpasswordadmin/${token}`, {
+            const response = await fetch(`http://localhost:5000/api/admin/resetpasswordadmin/${token}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
