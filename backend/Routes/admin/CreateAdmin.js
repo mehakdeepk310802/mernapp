@@ -153,7 +153,7 @@ router.post("/forgotpasswordadmin", [body('email').isEmail()], async (req, res) 
         user.resetTokenExpiry = Date.now() + 3600000; // Token expires in 1 hour
         await user.save();
 
-        mailSender(`http://localhost:5000/resetpasswordadmin/${resetToken}`, req.body.email);
+        mailSender(`http://localhost:3000/resetpasswordadmin/${resetToken}`, req.body.email);
         res.json({ success: true, message: "Password reset link sent to email" });
     } 
     catch (err) {
